@@ -24,6 +24,12 @@ namespace OLV_LargeIconReorderSink
         /// </summary>
         public bool UseInternalReordering { get; set; } = true;
 
+        public LargeIconReorderSink()
+        {
+            this.CanDropBetween = true;
+            this.CanDropOnItem = false;
+        }
+
         protected override void OnModelCanDrop(ModelDropEventArgs args)
         {
             if (UseInternalReordering)
