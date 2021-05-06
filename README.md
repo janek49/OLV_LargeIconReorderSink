@@ -4,9 +4,7 @@ Makes it possible to properly reorder items in the 'Large Icon' View in ObjectLi
 Example code for simple reordering:
 ```csharp
 objectListView1.DragSource = new SimpleDragSource();
-var sink = new LargeIconReorderSink();
-sink.CanDropBetween = true;
-objectListView1.DropSink = sink;
+objectListView1.DropSink = new LargeIconReorderSink();
 ```
 
 The dropsink also works well with grouping as seen below in the video. The full example application is included in this repository.
