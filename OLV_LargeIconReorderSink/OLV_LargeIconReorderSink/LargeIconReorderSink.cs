@@ -24,9 +24,19 @@ namespace OLV_LargeIconReorderSink
         /// </summary>
         public bool UseInternalReordering { get; set; } = true;
 
+        protected override void OnModelCanDrop(ModelDropEventArgs args)
+        {
+            if (UseInternalReordering)
+            {
+                if (args.DropTargetLocation == DropTargetLocation.BelowItem || args.DropTargetLocation == DropTargetLocation.AboveItem)
+                    args.Effect = DragDropEffects.Move;
+            }
+            base.OnModelCanDrop(args);
+        }
+
         protected override void OnModelDropped(ModelDropEventArgs e)
         {
-            if (UseInternalReordering && CanDropBetween && 
+            if (UseInternalReordering && CanDropBetween &&
                 (e.DropTargetLocation == DropTargetLocation.BelowItem || e.DropTargetLocation == DropTargetLocation.AboveItem))
             {
                 e.Effect = DragDropEffects.Move;
@@ -48,6 +58,11 @@ namespace OLV_LargeIconReorderSink
             }
             else
                 base.OnModelDropped(e);
+
+            ListView.SetObjects(ListView.Objects);
+
+            if (ListView.ShowGroups)
+                ListView.BuildGroups();
         }
 
         protected override void DrawFeedbackAboveItemTarget(Graphics g, Rectangle bounds)
